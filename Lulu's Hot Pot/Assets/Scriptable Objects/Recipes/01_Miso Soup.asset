@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Miso Soup
   icon: {fileID: 21300000, guid: 06dee05d5c7a60844957ade45839d19d, type: 3}
-  minTemperatureRange: 0.2
+  minTemperatureRange: 0.15
   maxTemperatureRange: 0.45
   steps:
   - ingredient: {fileID: 11400000, guid: 61356b5b4f2ec5243b0b1f51f5a6cac2, type: 2}

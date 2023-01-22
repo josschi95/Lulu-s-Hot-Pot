@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Curry
   icon: {fileID: 21300000, guid: 6997545bbb4f895428bf648e035c43a1, type: 3}
-  minTemperatureRange: 0.65
+  minTemperatureRange: 0.6
   maxTemperatureRange: 0.85
   steps:
   - ingredient: {fileID: 11400000, guid: 2a329e009263c1641b912f9368eb9587, type: 2}

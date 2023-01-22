@@ -27,6 +27,7 @@ public class CookingManager : MonoBehaviour
 
     #region - Private Variables -
 	private MenuManager menuManager;
+	private AudioSource source;
     private Recipe recipe; //The recipe for the current level
 	private RecipeStep nextStep; //the next step at which progress is halted until the correct ingredient is added
 	private int currentStepIndex; //Index to mark the current step in the recipe
@@ -48,9 +49,15 @@ public class CookingManager : MonoBehaviour
 	[SerializeField] private Animator flameAnim;
 	[SerializeField] private Animator transitionAnim;
 
+	[Header("Audio")]
+	[SerializeField] private AudioClip positive;
+	[SerializeField] private AudioClip negative;
+	[SerializeField] private AudioClip ingredientAdded;
+
 	private void Start()
 	{
 		menuManager = GetComponent<MenuManager>();
+		source = GetComponent<AudioSource>();
 		decreaseTempButton.onClick.AddListener(OnTempDecrease);
 		increaseTempButton.onClick.AddListener(OnTempIncrease);
 		HideDialogue();
@@ -206,12 +213,14 @@ public class CookingManager : MonoBehaviour
 
 	public void OnAddIngredient(Ingredient ingredient)
 	{
+		source.PlayOneShot(ingredientAdded);
 		if (!waitingToAddIngredient || ingredient != nextStep.ingredient)
         {
 			OnWrongIngredient();
 			return;
 		}
-		
+
+		source.PlayOneShot(positive);
 		waitingToAddIngredient = false;
 
 		ingredientMarkers[currentStepIndex].gameObject.transform.localScale = Vector2.one;
@@ -230,6 +239,7 @@ public class CookingManager : MonoBehaviour
 
 	private void OnWrongIngredient()
 	{
+		source.PlayOneShot(negative);
 		StartCoroutine(WrongIngredientWarning());
 		penguinAnim.SetTrigger("mistake");
 		progress -= 0.1f;
