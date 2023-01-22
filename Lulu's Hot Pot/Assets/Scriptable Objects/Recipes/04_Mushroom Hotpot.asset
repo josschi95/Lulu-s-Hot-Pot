@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8fd3204ceda17645818364215dd52c2, type: 3}
+  m_Name: 04_Mushroom Hotpot
+  m_EditorClassIdentifier: 
+  name: Mushroom Hotpot
+  icon: {fileID: 21300000, guid: 212d4d823f13cb340a68cd95f0d5e869, type: 3}
+  minTemperatureRange: 0.65
+  maxTemperatureRange: 0.85
+  steps:
+  - ingredient: {fileID: 11400000, guid: 04f34197e086aae4b8b3622d79d06af4, type: 2}
+    addAtPercentLowerBounds: 0.2
+  - ingredient: {fileID: 11400000, guid: b8b4aae9875167a458ac0248c9ca1b70, type: 2}
+    addAtPercentLowerBounds: 0.4
+  - ingredient: {fileID: 11400000, guid: e83bfe59e49ba7a46b67290dc1bafc7b, type: 2}
+    addAtPercentLowerBounds: 0.6
+  - ingredient: {fileID: 11400000, guid: 1fd777f2fab38f248881a28288e09fa4, type: 2}
+    addAtPercentLowerBounds: 0.8

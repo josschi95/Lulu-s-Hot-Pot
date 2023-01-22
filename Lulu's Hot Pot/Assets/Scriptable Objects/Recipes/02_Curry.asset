@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8fd3204ceda17645818364215dd52c2, type: 3}
+  m_Name: 02_Curry
+  m_EditorClassIdentifier: 
+  name: Curry
+  icon: {fileID: 21300000, guid: 6997545bbb4f895428bf648e035c43a1, type: 3}
+  minTemperatureRange: 0.65
+  maxTemperatureRange: 0.85
+  steps:
+  - ingredient: {fileID: 11400000, guid: 2a329e009263c1641b912f9368eb9587, type: 2}
+    addAtPercentLowerBounds: 0.2
+  - ingredient: {fileID: 11400000, guid: 8c44303e5f5104a41aff68771e94fe1b, type: 2}
+    addAtPercentLowerBounds: 0.4
+  - ingredient: {fileID: 11400000, guid: f0b4c83fd29738f4185cc1daad180dff, type: 2}
+    addAtPercentLowerBounds: 0.6
+  - ingredient: {fileID: 11400000, guid: 695032c27d7970642881afffbdf33e58, type: 2}
+    addAtPercentLowerBounds: 0.8
