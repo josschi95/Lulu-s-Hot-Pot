@@ -13,6 +13,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Animator penguinAnim;
     [SerializeField] private Button[] levelSelectionButtons;
     [SerializeField] private Recipe[] recipes;
+    [SerializeField] private Sprite[] scoreSprites;
 
     private CookingManager cookingManager;
     private bool levelSelected = false;
@@ -22,6 +23,7 @@ public class MenuManager : MonoBehaviour
     private void Start()
     {
         PlayerPrefs.DeleteAll();
+        HideScore();
         defaultPos = penguinAnim.transform.position;
         cookingManager = GetComponent<CookingManager>();
         stirringHint.SetActive(false);
@@ -52,11 +54,7 @@ public class MenuManager : MonoBehaviour
         penguinAnim.SetBool("isStirring", true);
         cookingManager.HideDialogue();
         stirringHint.SetActive(false);
-        int unlockedLevels = PlayerPrefs.GetInt("UnlockedLevels", 0);
-        for (int i = 0; i < unlockedLevels + 1; i++)
-        {
-            levelSelectionButtons[i].GetComponent<Animator>().SetTrigger("play");
-        }
+        ShowLevelButtons();
     }
 
     private void OnLevelSelected(int level)
@@ -91,6 +89,7 @@ public class MenuManager : MonoBehaviour
             levelSelectionButtons[i].GetComponent<Animator>().SetTrigger("hide");
         }
 
+        HideScore();
         penguinAnim.transform.position = defaultPos;
         penguinAnim.Play("penguin_idle");
         penguinAnim.SetBool("isStirring", true);
@@ -98,11 +97,18 @@ public class MenuManager : MonoBehaviour
         levelSelected = false;
 
         yield return new WaitForSeconds(1f);
+        ShowLevelButtons();
+    }
+
+    private void ShowLevelButtons()
+    {
         int unlockedLevels = PlayerPrefs.GetInt("UnlockedLevels", 0);
         for (int i = 0; i < unlockedLevels + 1; i++)
         {
             if (i > recipes.Length - 1) break;
             levelSelectionButtons[i].GetComponent<Animator>().SetTrigger("play");
+            int score = PlayerPrefs.GetInt("Score" + i, 0);
+            levelSelectionButtons[i].transform.GetChild(1).GetComponent<Image>().sprite = scoreSprites[score];
         }
     }
 
@@ -110,4 +116,17 @@ public class MenuManager : MonoBehaviour
     {       
         StartCoroutine(LoadMenuDelay());
     }
+
+    public void DisplayScore(int score)
+    {
+        penguinAnim.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = scoreSprites[score];
+        penguinAnim.transform.GetChild(0).gameObject.SetActive(true);
+    }
+
+    private void HideScore()
+    {
+        penguinAnim.transform.GetChild(0).gameObject.SetActive(false);
+    }
+
+
 }

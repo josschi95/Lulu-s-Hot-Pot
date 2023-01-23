@@ -37,6 +37,8 @@ public class CookingManager : MonoBehaviour
 	private float progress;
 	private float timeSinceLastStir;
 
+	private float timer;
+
 	private bool inRequiredTemperatureRange = false; //Is the currentTemperature within the bounds of the recipe
 	private bool waitingToAddIngredient = false; //Has progress reached a step within the recipe
 	private bool allIngredientsAdded = false; //Are all ingredients added
@@ -74,6 +76,7 @@ public class CookingManager : MonoBehaviour
 		{
 			HandleTemperature();
 			HandleProgress();
+			timer += Time.deltaTime;
 		}
 	}
 
@@ -103,6 +106,7 @@ public class CookingManager : MonoBehaviour
 		isCooking = true;
 
 		gamePlayCanvas.SetActive(true);
+		timer = 0;
 	}
 
 	private void PlaceIngredients()
@@ -257,19 +261,29 @@ public class CookingManager : MonoBehaviour
 
 	public void OnRecipeCompleted()
 	{
+		isCooking = false;
 		penguinAnim.transform.position += Vector3.left;
 		penguinAnim.SetTrigger("cheer");
 		gamePlayCanvas.SetActive(false);
-		isCooking = false;
 
 		for (int i = 0; i < ingredientObjects.Length; i++)
 		{
 			ingredientObjects[i].gameObject.SetActive(false);
 		}
 
-		int unlockedLevels = PlayerPrefs.GetInt("UnlockedLevels");
 		int level = menuManager.recipeIndex + 1;
-		if (level > unlockedLevels) PlayerPrefs.SetInt("UnlockedLevels", level);
+		int oldScore = PlayerPrefs.GetInt("Score" + menuManager.recipeIndex, 0);
+
+		int newScore = 0;
+		if (timer <= 60) newScore = 3;
+		else if (timer <= 75) newScore = 2;
+		else if (timer <= 90) newScore = 1;
+		menuManager.DisplayScore(newScore);
+
+		if (newScore > oldScore) PlayerPrefs.SetInt("Score" + menuManager.recipeIndex, newScore);
+
+		int unlockedLevels = PlayerPrefs.GetInt("UnlockedLevels");
+		if (level > unlockedLevels && PlayerPrefs.GetInt("Score" + menuManager.recipeIndex) >= 2) PlayerPrefs.SetInt("UnlockedLevels", level);
 
 		menuManager.ReturnToMainMenu();
 	}
